@@ -14,10 +14,10 @@ makeCacheMatrix <- function(x = matrix()) {
           x <<- y
           xinv <<- NULL
         } 
-        get <- function() x #a function which returns the matrix
-        setinv <- function(inverse) xinv <<- inverse #a function which sets/caches inv of matrix
+        get <- function() x #this function returns the matrix
+        setinv <- function(inverse) xinv <<- inverse #a function which sets/caches the inverse
         getinv <- function() xinv #a function returns the inverse of the matrix
-        list(set=set,get=get,setinv=setinv,getinv=getinv)
+        list(set=set,get=get,setinv=setinv,getinv=getinv) #the list of functions returned
 }
 
 
@@ -29,7 +29,7 @@ cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
          xinv <- x$getinv() #calls the getinv function from the list of functions
          if(!is.null(xinv)){#checks to see if cached
-           messae("getting cached data") #tells you that it is retrieving the cached info
+           message("getting cached data") #tells you that it is retrieving the cached info
            return(xinv) #returns the cached inverse
          }
          mymatrix <- x$get()  #gets the matrix so that it can solve for the inverse
@@ -38,6 +38,7 @@ cacheSolve <- function(x, ...) {
          ##note: solve, when the second argument is missing, solves for the solution
          ##to firstargument%*%x=IDENTITYMATRIX, i.e., it solves for the inverse of
          ##the matrix passed in the first argument
+         ##this will throw an error for a singular matrix (i.e., if the matrix is noninvertable)
          
          x$setinv(xinv) #sets and caches the inverse
          xinv #returns the inverse
